@@ -4,6 +4,9 @@
  */
 package estancias;
 
+import estancias.Servicios.casaService;
+import java.util.Scanner;
+
 /**
  *
  * @author diego
@@ -15,6 +18,16 @@ public class Main {
      */
     public static void main(String[] args) {
         // TODO code application logic here
+        Scanner sc = new Scanner(System.in);
+        int[] numeros = new int[4];
+        
+        casaService cs = new casaService();
+        
+        cs.codificador();
+        
+        
+        
+        
     }
     
 }
