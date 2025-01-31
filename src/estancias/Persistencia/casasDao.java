@@ -38,9 +38,9 @@ public final class casasDao extends DAO{
             
             
             // Si el usuario no existe, insertar el nuevo usuario
-            String sql = "INSERT INTO casas (id_casa, calle, numero, codigo_postal, ciudad, pais, desde, hasta, tiempo_min, tiempo_max, precio, tipo)"
+            String sql = "INSERT INTO casas (id_casa, calle, numero, codigo_postal, ciudad, pais, fecha_desde, fecha_hasta, tiempo_minimo, tiempo_maximo, precio_habitacion, tipo_vivienda)"
                     + "VALUES ('" + casa.getId() + "' , '" + casa.getCalle() + "', '" + casa.getNumero() + "', '" + casa.getCodigo_postal() + "', '" + casa.getCiudad() 
-                    + "', '" + casa.getPais() + "', '" + casa.getDesde() + "', '" + casa.getHasta() + "');"
+                    + "', '" + casa.getPais() + "', '" + casa.getDesde() + "', '" + casa.getHasta()
                     + "', '" + casa.getTiempo_min() + "', '" + casa.getTiempo_max() + "', '" + casa.getPrecio() + "', '" + casa.getTipo() + "');";
 
             InstarModificarEliminar(sql);
@@ -76,12 +76,12 @@ public final class casasDao extends DAO{
                 + "codigo_postal = '" + casa.getCodigo_postal() + "', "
                 + "ciudad = '" + casa.getCiudad() + "', "
                 + "pais = '" + casa.getPais() + "', "
-                + "desde = '" + casa.getDesde() + "', "
-                + "hasta = '" + casa.getHasta() + "', "
-                + "tiempo_min = '" + casa.getTiempo_min() + "', "
-                + "tiempo_max = '" + casa.getTiempo_max() + "', "
-                + "precio = '" + casa.getPrecio() + "', "
-                + "tipo = '" + casa.getTipo() + "' "
+                + "fecha_desde = '" + casa.getDesde() + "', "
+                + "fecha_hasta = '" + casa.getHasta() + "', "
+                + "tiempo_minimo = '" + casa.getTiempo_min() + "', "
+                + "tiempo_maximo = '" + casa.getTiempo_max() + "', "
+                + "precio_habitacion = '" + casa.getPrecio() + "', "
+                + "tipo_vivienda = '" + casa.getTipo() + "' "
                 + "WHERE id_casa = " + casa.getId() + ";";
             
             InstarModificarEliminar(sql);
@@ -110,7 +110,7 @@ public final class casasDao extends DAO{
                 }
             }
             
-            String sql = "DELETE FROM casas WHERE id_casa = '" + casa.getId() + ";";
+            String sql = "DELETE FROM casas WHERE id_casa = " + casa.getId() + ";";
             InstarModificarEliminar(sql);
             System.out.println("Casa con código: " + casa.getId() + " eliminada correctamente.");
             
@@ -119,7 +119,7 @@ public final class casasDao extends DAO{
         }
     }
     
-    public void consultarUsuarios() {
+    public void consultarCasas() {
     String sql = "SELECT * FROM casas;";
     try {
         // Conectar a la base de datos
@@ -138,13 +138,19 @@ public final class casasDao extends DAO{
             String codigoPostal = resultado.getString("codigo_postal");
             String ciudad = resultado.getString("ciudad");
             String pais = resultado.getString("pais");
-            java.sql.Date desde = resultado.getDate("desde");
-            java.sql.Date hasta = resultado.getDate("hasta");
-            int tiempoMin = resultado.getInt("tiempo_min");
-            int tiempoMax = resultado.getInt("tiempo_max");
-            double precio = resultado.getDouble("precio");
-            String tipo = resultado.getString("tipo");
+            java.sql.Date desde = resultado.getDate("fecha_desde");
+            java.sql.Date hasta = resultado.getDate("fecha_hasta");
+            int tiempoMin = resultado.getInt("tiempo_minimo");
+            int tiempoMax = resultado.getInt("tiempo_maximo");
+            double precio = resultado.getDouble("precio_habitacion");
+            String tipo = resultado.getString("tipo_vivienda");
+            
+            System.out.println("Casa " + idCasa + " precio: " + precio);
         }
+        
+        
+        
+        
     } catch (SQLException ex) {
         System.out.println("Error en la consulta: " + ex.getMessage());
         Logger.getLogger(DAO.class.getName()).log(Level.SEVERE, null, ex);

@@ -4,8 +4,10 @@
  */
 package estancias.Persistencia;
 
+import java.lang.reflect.Field;
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -76,6 +78,7 @@ public class DAO {
     
     protected void InstarModificarEliminar(String sql){
         
+        //Conectamos a la base de datos
         try {
             cx = conectar();
             if (cx != null) {
@@ -90,7 +93,7 @@ public class DAO {
             // Cerrar recursos
             desconectar();
         }
-    }
+        }
     
     protected void consultarBase(String sql) throws Exception {
         try {
@@ -106,5 +109,21 @@ public class DAO {
 
     public static void main(String[] args) {
     }
+ 
+    private Object[] obtenerValores(Object obj) {
+        Field[] fields = obj.getClass().getDeclaredFields(); // Obtiene todos los atributos del objeto
+        Object[] values = new Object[fields.length];
+
+        try {
+            for (int i = 0; i < fields.length; i++) {
+                fields[i].setAccessible(true); // Permitir acceso a atributos privados
+                values[i] = fields[i].get(obj); // Extraer valor
+            }
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        }
+
+        return values;
+}
     
 }

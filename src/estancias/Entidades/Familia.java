@@ -14,19 +14,19 @@ public class familia {
     private String nombre;
     private int edad_min;
     private int edad_max;
-    private int num_hjios;
+    private int num_hijos;
     private String email;
 
     public familia() {
     }
 
-    public familia(int id, casas casa, String nombre, int edad_min, int edad_max, int num_hjios, String email) {
+    public familia(int id, casas casa, String nombre, int edad_min, int edad_max, int num_hijos, String email) {
         this.id = id;
         this.casa = casa;
         this.nombre = nombre;
         this.edad_min = edad_min;
         this.edad_max = edad_max;
-        this.num_hjios = num_hjios;
+        this.num_hijos = num_hijos;
         this.email = email;
     }
 
@@ -70,12 +70,12 @@ public class familia {
         this.edad_max = edad_max;
     }
 
-    public int getNum_hjios() {
-        return num_hjios;
+    public int getNum_hijos() {
+        return num_hijos;
     }
 
-    public void setNum_hjios(int num_hjios) {
-        this.num_hjios = num_hjios;
+    public void setNum_hijos(int num_hjios) {
+        this.num_hijos = num_hjios;
     }
 
     public String getEmail() {

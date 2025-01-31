@@ -4,6 +4,9 @@
  */
 package estancias;
 
+import estancias.Entidades.casas;
+import estancias.Persistencia.casasDao;
+import estancias.Persistencia.familiaDao;
 import estancias.Servicios.casaService;
 import java.util.Scanner;
 
@@ -20,13 +23,15 @@ public class Main {
         // TODO code application logic here
         Scanner sc = new Scanner(System.in);
         int[] numeros = new int[4];
-        
+        familiaDao famDao = new familiaDao();
         casaService cs = new casaService();
+        casasDao cd = new casasDao();
         
-        cs.codificador();
-        
-        
-        
+        casas casa = cs.generarCasa(800);
+        cs.insertarCasa(casa);
+        cd.consultarCasas();
+        cd.eliminarCasa(casa);
+        cd.consultarCasas();
         
     }
     
