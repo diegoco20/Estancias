@@ -58,4 +58,6 @@ public class casaService {
     public void insertarCasa(casas casa){
         casaDao.guardarCasa(casa);
     }
+    
+    
 }

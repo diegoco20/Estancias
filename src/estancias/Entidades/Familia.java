@@ -20,7 +20,7 @@ public class familia {
     public familia() {
     }
 
-    public familia(int id, casas casa, String nombre, int edad_min, int edad_max, int num_hijos, String email) {
+    public familia(int id, String nombre, int edad_min, int edad_max, int num_hijos, String email, casas casa) {
         this.id = id;
         this.casa = casa;
         this.nombre = nombre;
@@ -29,7 +29,12 @@ public class familia {
         this.num_hijos = num_hijos;
         this.email = email;
     }
-
+    
+    public familia(int id, String nombre, int edadMin, int edadMax, int numHijos, String email) {
+        // Llama al constructor principal con casa = null
+        this(id, nombre, edadMin, edadMax, numHijos, email, null);
+    }
+    
     public int getId() {
         return id;
     }
@@ -84,6 +89,11 @@ public class familia {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    @Override
+    public String toString() {
+        return "familia{" + "id=" + id + ", casa=" + casa + ", nombre=" + nombre + ", edad_min=" + edad_min + ", edad_max=" + edad_max + ", num_hijos=" + num_hijos + ", email=" + email + '}';
     }
     
     

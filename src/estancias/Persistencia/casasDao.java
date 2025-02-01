@@ -7,6 +7,7 @@ package estancias.Persistencia;
 
 import estancias.Entidades.casas;
 import estancias.Persistencia.DAO;
+import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -18,7 +19,7 @@ import java.util.logging.Logger;
 public final class casasDao extends DAO{
     
     public void guardarCasa(casas casa) {
-
+        
         try {
             if (casa == null) {
                 throw new Exception("Debe indicar una casa");
@@ -51,8 +52,7 @@ public final class casasDao extends DAO{
         }
     }
     
-    public void modificarCasa(casas casa){
-        
+    public void modificarCasa(casas casa, int id){
         try {
             if (casa == null) {
                 throw new Exception("Debe indicar una casa para modificar");
@@ -159,6 +159,92 @@ public final class casasDao extends DAO{
         desconectar();
     }
 }
-   
     
+    public void consultarCasasPrecioDesde(int precio){
+        String sql = "SELECT id_casa, precio_habitacion FROM casas WHERE precio_habitacion > ? ;";
+        
+        //Verificación de precio
+        if (precio < 0) {
+               System.out.println("Debe ingresar un precio postivo");
+               return;
+            }
+        
+        try {
+            // Conectamos a la base de datos
+            conectar();
+            //Creamos una sentencia y un result set 
+            sentencia = cx.createStatement();
+            resultado = sentencia.executeQuery(sql);
+            
+            //Procesamos los resultados 
+            while (resultado.next()) {
+                System.out.println("Casa:" + resultado.getInt("id_casa")
+                        + "    precio = " + resultado.getDouble(2));
+            }
+        } catch (Exception e) {
+            System.out.println("Error en la consulta: " + e.getMessage());
+            Logger.getLogger(DAO.class.getName()).log(Level.SEVERE, null, e);
+        }
+        //Cerramos los recursos
+        desconectar();
+    }
+    
+    public void consultarCasasPrecioDesdePrepared(int precio){
+        //Consulta parametrizada
+        
+        String sql = "SELECT id_casa, precio_habitacion FROM casas WHERE precio_habitacion > ? ;";
+        
+        //Verificación de precio
+        if (precio < 0) {
+               System.out.println("Debe ingresar un precio postivo");
+               return;
+            }
+        
+        try {
+            // Conectamos a la base de datos
+            conectar();
+            //Creamos una sentencia y un result set 
+            PreparedStatement stmt = cx.prepareStatement(sql);
+            //Asignamos el parámetro
+            stmt.setInt(1, precio);
+            
+            // Ejecutamos la consulta
+            resultado = stmt.executeQuery();
+            
+            //Procesamos los resultados 
+            while (resultado.next()) {
+                System.out.println("Casa:" + resultado.getInt("id_casa")
+                        + "    precio = " + resultado.getDouble(2));
+            }
+        } catch (Exception e) {
+            System.out.println("Error en la consulta: " + e.getMessage());
+            Logger.getLogger(DAO.class.getName()).log(Level.SEVERE, null, e);
+        }
+        //Cerramos los recursos
+        desconectar();
+    }
+    
+    public void consultarCasaCiudad(String ciudad){
+        String sql = "SELECT id_casa, ciudad FROM casas WHERE ciudad = ?;";
+        
+        try{
+            //Crear una conexión
+            conectar();
+            //Creamos una statment
+            PreparedStatement stmt = cx.prepareStatement(sql);
+            //Asignamos parámetros
+            stmt.setString(1, ciudad);
+            //Ejecutamos statement
+            resultado = stmt.executeQuery();
+            
+            //Mostramos los resultados
+            while(resultado.next()){
+                System.out.println("Casa id = " + resultado.getInt(1) + " ciudad = " + resultado.getString(2));
+            }
+            
+        } catch (Exception e){
+            System.out.println("Error en la consulta: " + e.getMessage());
+            Logger.getLogger(DAO.class.getName()).log(Level.SEVERE, null, e);
+        }           
+    }
 }
